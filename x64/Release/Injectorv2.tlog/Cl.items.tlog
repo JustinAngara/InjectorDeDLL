@@ -1,0 +1,10 @@
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Cleanup\Cleanup.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Cleanup.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Global\Conditionals.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Conditionals.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Global\HandleGuard.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\HandleGuard.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Global\Process.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Process.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Life\InjectorContext.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\InjectorContext.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Life\Injectorv2.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Injectorv2.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Life\Procedure.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Procedure.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Memory\ManualMap.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\ManualMap.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Memory\Memory.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Memory.obj
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\src\Shellcode\ShellcodeHelper.cpp;C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\ShellcodeHelper.obj

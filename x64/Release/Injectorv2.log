@@ -1,0 +1,17 @@
+﻿  Cleanup.cpp
+  Conditionals.cpp
+  HandleGuard.cpp
+  Process.cpp
+  InjectorContext.cpp
+  Injectorv2.cpp
+  Procedure.cpp
+  ManualMap.cpp
+  Memory.cpp
+  ShellcodeHelper.cpp
+  Generating code
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 632 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Injectorv2.vcxproj -> C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\x64\Release\Injectorv2.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.

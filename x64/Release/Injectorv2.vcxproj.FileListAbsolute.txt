@@ -1,0 +1,6 @@
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\working codebase\Injectorv2\x64\Release\Injectorv2.vcxproj.MdMergeInputs.cache
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\working codebase\Injectorv2\x64\Release\Injectorv2.vcxproj.cppwinrt_plat.cache
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\working codebase\Injectorv2\x64\Release\Injectorv2.vcxproj.cppwinrt_comp.cache
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Injectorv2.vcxproj.MdMergeInputs.cache
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Injectorv2.vcxproj.cppwinrt_plat.cache
+C:\Users\justi\source\repos\asphyxia\asphyxia-cs2\cheeto codebase\Injectorv2\x64\Release\Injectorv2.vcxproj.cppwinrt_comp.cache
