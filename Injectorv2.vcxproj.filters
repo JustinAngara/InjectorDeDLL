@@ -81,4 +81,13 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+    <None Include="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\.signature.p7s" />
+    <None Include="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\LICENSE" />
+    <None Include="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\Microsoft.Windows.CppWinRT.2.0.220531.1.nupkg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\readme.txt" />
+  </ItemGroup>
 </Project>
