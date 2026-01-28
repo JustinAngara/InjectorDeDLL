@@ -5,11 +5,15 @@ Manual mapping DLL injector implemented in C++20 that provides a graphical user 
 
 ## Security and anti-detection features:
 
-Executable name randomization: wWinMain generates random executable name at runtime
-Header cleaning: Removes DOS/NT headers from injected DLL
-Section removal: Deallocates non-essential PE sections
-Memory protection adjustment: Changes page protections to appear normal
-Shellcode cleanup: Removes shellcode after execution
+**Executable name randomization:** wWinMain generates random executable name at runtime
+
+**Header cleaning:** Removes DOS/NT headers from injected DLL
+
+**Section removal:** Deallocates non-essential PE sections
+
+**Memory protection adjustment:** Changes page protections to appear normal
+
+**Shellcode cleanup:** Removes shellcode after execution
 
 
 ![Alt text](images/1.png)
