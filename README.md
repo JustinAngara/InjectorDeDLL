@@ -1,8 +1,16 @@
+\## Overview
+
+
+
+
+
 Manual mapping DLL injector implemented in C++20 that provides a graphical user interface for selecting target processes and injecting custom DLLs. Unlike traditional injection methods that use Windows' LoadLibrary API, this injector implements the entire PE loading process manually within the target process.
 
 
 
-Security and anti-detection features:
+\## Security and anti-detection features:
+
+
 
 Executable name randomization: wWinMain generates random executable name at runtime
 
@@ -22,7 +30,9 @@ Shellcode cleanup: Removes shellcode after execution
 
 
 
-Requirements
+
+
+\## Requirements
 
 Visual Studio 2019+ with v145 Platform Toolset
 
