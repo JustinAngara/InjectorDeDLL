@@ -1,9 +1,34 @@
-Open the visual studio project via Visual Studio (duh).
+Manual mapping DLL injector implemented in C++20 that provides a graphical user interface for selecting target processes and injecting custom DLLs. Unlike traditional injection methods that use Windows' LoadLibrary API, this injector implements the entire PE loading process manually within the target process.
 
-Build (crtl + b) and parent directory for the x64 Build.
 
-Open the exe file via ADMIN PREMISSION.
 
-Inject into any game of your choice.
+Security and anti-detection features:
 
-Will be adding more security towards the injector for undetection.
+Executable name randomization: wWinMain generates random executable name at runtime
+
+Header cleaning: Removes DOS/NT headers from injected DLL
+
+Section removal: Deallocates non-essential PE sections
+
+Memory protection adjustment: Changes page protections to appear normal
+
+Shellcode cleanup: Removes shellcode after execution
+
+
+
+
+
+!\[Alt text](images/1.png)
+
+
+
+Requirements
+
+Visual Studio 2019+ with v145 Platform Toolset
+
+Windows 10/11 operating system
+
+Administrator rights (mandatory for process injection)
+
+C++20 compiler support
+
