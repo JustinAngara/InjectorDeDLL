@@ -3,6 +3,8 @@
 
 Manual mapping DLL injector implemented in C++20 that provides a graphical user interface for selecting target processes and injecting custom DLLs. Unlike traditional injection methods that use Windows' LoadLibrary API, this injector implements the entire PE loading process manually within the target process.
 
+Prior Commits can be found at CS2-Traf-Client repository (https://github.com/JustinAngara/CS2-TRAF-CLIENT)
+
 ## Security and anti-detection features:
 
 **Executable name randomization:** wWinMain generates random executable name at runtime
