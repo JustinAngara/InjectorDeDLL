@@ -3,7 +3,7 @@
 #include "../Life/InjectorContext.h"
 #include "../Global/Globals.h"
 #include <windows.h>
-#include <windows.h>
+#include <sstream>
 #include <vector>
 #include <fstream>
 #include <string>
@@ -66,33 +66,55 @@ BYTE* Memory::AllocateProcessMemory(InjectorContext& ctx, HANDLE hProcess, SIZE_
 
 bool Memory::WritePEHeaders(InjectorContext& ctx, HANDLE hProcess, BYTE* pTargetBase, const BYTE* pSourceData, std::wstring& errorMsg)
 {
-	IMAGE_DOS_HEADER* pDosHeader   = reinterpret_cast<IMAGE_DOS_HEADER*>(const_cast<BYTE*>(pSourceData));
-	IMAGE_NT_HEADERS* pNtHeaders   = reinterpret_cast<IMAGE_NT_HEADERS*>(const_cast<BYTE*>(pSourceData + pDosHeader->e_lfanew));
-	SIZE_T			  bytesWritten = 0;
-	if (!WriteProcessMemory(hProcess, pTargetBase, pSourceData, pNtHeaders->OptionalHeader.SizeOfHeaders, &bytesWritten) ||
-	bytesWritten != pNtHeaders->OptionalHeader.SizeOfHeaders)
+	IMAGE_DOS_HEADER* pDosHeader = reinterpret_cast<IMAGE_DOS_HEADER*>(const_cast<BYTE*>(pSourceData));
+	IMAGE_NT_HEADERS* pNtHeaders = reinterpret_cast<IMAGE_NT_HEADERS*>(const_cast<BYTE*>(pSourceData + pDosHeader->e_lfanew));
+	SIZE_T            bytesWritten = 0;
+
+	// capture the NTSTATUS return code
+	NTSTATUS status = NtWriteVirtualMemory_Syscall(
+		hProcess, 
+		pTargetBase, 
+		(PVOID)pSourceData, 
+		pNtHeaders->OptionalHeader.SizeOfHeaders, 
+		&bytesWritten
+	);
+
+	if (status != 0) 
 	{
-		errorMsg = L"[-] Error writing PE headers, code: 0x" + std::to_wstring(GetLastError());
+		std::wstringstream ss;
+		ss << std::hex << status;
+		errorMsg = L"[-] Error writing PE headers, NTSTATUS: 0x" + ss.str();
 		return false;
 	}
+
 	errorMsg = L"[+] PE headers written successfully";
 	return true;
 }
 
+
 bool Memory::WriteSections(InjectorContext& ctx, HANDLE hProcess, BYTE* pTargetBase, const BYTE* pSourceData, IMAGE_NT_HEADERS* pNtHeaders, std::wstring& errorMsg)
 {
 	IMAGE_SECTION_HEADER* pSectionHeader = IMAGE_FIRST_SECTION(pNtHeaders);
-	SIZE_T				  bytesWritten	 = 0;
+	SIZE_T bytesWritten = 0;
+
 	for (WORD i = 0; i < pNtHeaders->FileHeader.NumberOfSections; ++i)
 	{
+		// skip empty sections
 		if (pSectionHeader[i].SizeOfRawData)
 		{
-			if (!WriteProcessMemory(hProcess, pTargetBase + pSectionHeader[i].VirtualAddress,
-				pSourceData + pSectionHeader[i].PointerToRawData,
-				pSectionHeader[i].SizeOfRawData, &bytesWritten) ||
-			bytesWritten != pSectionHeader[i].SizeOfRawData)
+			NTSTATUS status = NtWriteVirtualMemory_Syscall(
+				hProcess, 
+				pTargetBase + pSectionHeader[i].VirtualAddress,
+				(PVOID)(pSourceData + pSectionHeader[i].PointerToRawData),
+				pSectionHeader[i].SizeOfRawData, 
+				&bytesWritten
+			);
+
+			if (status != 0)
 			{
-				errorMsg = L"[-] Error writing section " + std::to_wstring(i) + L", code: 0x" + std::to_wstring(GetLastError());
+				std::wstringstream ss;
+				ss << std::hex << status;
+				errorMsg = L"[-] Error writing section " + std::to_wstring(i) + L", NTSTATUS: 0x" + ss.str();
 				return false;
 			}
 		}
@@ -103,21 +125,34 @@ bool Memory::WriteSections(InjectorContext& ctx, HANDLE hProcess, BYTE* pTargetB
 
 BYTE* Memory::AllocateMappingData(InjectorContext& ctx, HANDLE hProcess, const MANUAL_MAPPING_DATA& mappingData, std::wstring& errorMsg)
 {
-	BYTE* pMappingDataAlloc = reinterpret_cast<BYTE*>(VirtualAllocEx(hProcess, nullptr, sizeof(MANUAL_MAPPING_DATA),
-	MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE));
+	BYTE* pMappingDataAlloc = reinterpret_cast<BYTE*>(VirtualAllocEx(hProcess, nullptr, sizeof(MANUAL_MAPPING_DATA), MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE));
+
 	if (!pMappingDataAlloc)
 	{
 		errorMsg = L"[-] Error allocating mapping data, code: 0x" + std::to_wstring(GetLastError());
 		return nullptr;
 	}
+
 	SIZE_T bytesWritten = 0;
-	if (!WriteProcessMemory(hProcess, pMappingDataAlloc, &mappingData, sizeof(MANUAL_MAPPING_DATA), &bytesWritten) ||
-	bytesWritten != sizeof(MANUAL_MAPPING_DATA))
+
+	NTSTATUS status = NtWriteVirtualMemory_Syscall(
+		hProcess, 
+		pMappingDataAlloc, 
+		(PVOID)(&mappingData), 
+		sizeof(MANUAL_MAPPING_DATA), 
+		&bytesWritten
+	);
+
+	if (status != 0) 
 	{
-		errorMsg = L"[-] Error writing mapping data, code: 0x" + std::to_wstring(GetLastError());
+		std::wstringstream ss;
+		ss << std::hex << status;
+		errorMsg = L"[-] Error writing mapping data, NTSTATUS: 0x" + ss.str();
+
 		VirtualFreeEx(hProcess, pMappingDataAlloc, 0, MEM_RELEASE);
 		return nullptr;
 	}
+
 	errorMsg = L"[+] Mapping data allocated and written";
 	return pMappingDataAlloc;
 }
