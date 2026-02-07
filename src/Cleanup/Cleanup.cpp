@@ -2,6 +2,7 @@
 #include "../Global/Conditionals.h"
 #include "../Life/InjectorContext.h"
 #include "../Global/Globals.h"
+#include "../Memory/Memory.h"
 #include <windows.h>
 #include <thread>
 #include <chrono>
@@ -34,9 +35,18 @@ bool Cleanup::CleanAndProtectMemory(InjectorContext& ctx, HANDLE hProcess, BYTE*
 	std::uniform_int_distribution<> dis(5, 15);
 	if (cleanHeader)
 	{
-		BYTE   cleanBuffer[0x1000] = { 0 };
-		SIZE_T bytesWritten		   = 0;
-		if (!WriteProcessMemory(hProcess, pTargetBase, cleanBuffer, pNtHeaders->OptionalHeader.SizeOfHeaders, &bytesWritten))
+		std::vector<BYTE> emptyBuffer(pNtHeaders->OptionalHeader.SizeOfHeaders, 0);
+		SIZE_T bytesWritten = 0;
+
+		NTSTATUS status = NtWriteVirtualMemory_Syscall(
+			hProcess, 
+			pTargetBase, 
+			(PVOID)emptyBuffer.data(), 
+			pNtHeaders->OptionalHeader.SizeOfHeaders, 
+			&bytesWritten
+		);
+
+		if (status != 0)
 		{
 			errorMsg = L"[-] Error cleaning headers, code: 0x" + std::to_wstring(GetLastError());
 			return false;
@@ -56,8 +66,17 @@ bool Cleanup::CleanAndProtectMemory(InjectorContext& ctx, HANDLE hProcess, BYTE*
 			{
 				if (pSectionHeader[i].SizeOfRawData)
 				{
-					if (!WriteProcessMemory(hProcess, pTargetBase + pSectionHeader[i].VirtualAddress,
-						cleanBuffer, pSectionHeader[i].SizeOfRawData, &bytesWritten))
+					std::vector<BYTE> sectionZeroes(pSectionHeader[i].SizeOfRawData, 0);
+					SIZE_T bytesWritten = 0;
+
+					NTSTATUS status = NtWriteVirtualMemory_Syscall(
+						hProcess, 
+						pTargetBase + pSectionHeader[i].VirtualAddress,
+						(PVOID)sectionZeroes.data(),
+						pSectionHeader[i].SizeOfRawData, 
+						&bytesWritten
+					);
+					if (status!=0)
 					{
 						errorMsg = L"[-] Error cleaning section " + std::to_wstring(i) + L", code: 0x" + std::to_wstring(GetLastError());
 						return false;
@@ -96,6 +115,8 @@ bool Cleanup::CleanAndProtectMemory(InjectorContext& ctx, HANDLE hProcess, BYTE*
 			}
 		}
 	}
+
+	// clean up internal buffers
 	if (pShellcode)
 	{
 		VirtualFreeEx(hProcess, pShellcode, 0, MEM_RELEASE);
