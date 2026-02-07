@@ -6,7 +6,14 @@
 #include <CommCtrl.h>
 
 #pragma comment(lib, "comctl32.lib")
-
+typedef LONG NTSTATUS;
+extern "C" NTSTATUS NtWriteVirtualMemory_Syscall(
+	HANDLE ProcessHandle,
+	PVOID BaseAddress,
+	PVOID Buffer,
+	SIZE_T NumberOfBytesToWrite,
+	PSIZE_T NumberOfBytesWritten
+);
 namespace Memory
 {
 	std::vector<BYTE> LoadDLL(InjectorContext& ctx, const std::wstring& dllPath);

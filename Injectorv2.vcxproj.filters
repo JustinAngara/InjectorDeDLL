@@ -86,8 +86,14 @@
     <None Include="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\.signature.p7s" />
     <None Include="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\LICENSE" />
     <None Include="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\Microsoft.Windows.CppWinRT.2.0.220531.1.nupkg" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="packages\Microsoft.Windows.CppWinRT.2.0.220531.1\readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="src\Memory\WriteMem.asm">
+      <Filter>Source Files</Filter>
+    </MASM>
   </ItemGroup>
 </Project>
