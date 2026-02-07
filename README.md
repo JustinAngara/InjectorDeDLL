@@ -15,8 +15,9 @@ Prior Commits can be found at CS2-Traf-Client repository (https://github.com/Jus
 
 **Memory protection adjustment:** Changes page protections to appear normal
 
-**Shellcode cleanup:** Removes shellcode after execution
+**Direct System Implementation:** Used direct assembly instructions instead of user-mode hooks
 
+**Shellcode cleanup:** Removes shellcode after execution
 
 ![Alt text](images/1.png)
 
