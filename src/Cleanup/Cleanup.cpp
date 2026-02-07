@@ -54,7 +54,6 @@ bool Cleanup::CleanAndProtectMemory(InjectorContext& ctx, HANDLE hProcess, BYTE*
 	}
 	if (cleanUnneededSections)
 	{
-		BYTE				  cleanBuffer[0x1000] = { 0 };
 		IMAGE_SECTION_HEADER* pSectionHeader	  = IMAGE_FIRST_SECTION(pNtHeaders);
 		SIZE_T				  bytesWritten		  = 0;
 		for (WORD i = 0; i < pNtHeaders->FileHeader.NumberOfSections; ++i)
