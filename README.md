@@ -27,3 +27,7 @@ Visual Studio 2019+ with v145 Platform Toolset
 Windows 10/11 operating system
 Administrator rights (mandatory for process injection)
 C++20 compiler support
+
+## License
+
+- This project is licensed under the [MIT License](https://opensource.org/licenses/mit-license.php) - see the [LICENSE](LICENSE) file for details.
